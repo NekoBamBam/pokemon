@@ -34,10 +34,17 @@ export function efectividad(att,deff) {
   
 }
 export function suerte() {
-  
+  let rando = Math.random();
+    if (rando < 0.33) {
+        return 3
+    }else {
+        return 1}
 }
 export function ataque(att,deff) {
-  
+  const suerte1 = suerte()
+    const efectividad1 = efectividad(ataque.type , defensa.type)
+    const danho = 50 * ataque.level / defensa.level * efectividad1 * suerte1 
+    return danho 
 }
 export function gameOver() {}
 

@@ -19,6 +19,29 @@ function App() {
     setPlayer(jugadores[0]);
     setPc(jugadores[1]);
   }, []);
+
+  function damageDealt() {
+    let playerDamage = attack(player, pc);
+    let indexMove = Math.floor(Math.random() * player.moves.length);
+    let move = player.moves[indexMove];
+    let log = `de Jugador ha utilizado ${move}`;
+    setAttacker(player);
+    setLog(log);
+
+    setComputer({
+      ...pc,
+      vida: Math.floor(pc.vida - playerDamage),
+    });
+    setTimeout(() => {
+      let computerDamage = attack(pc, player);
+      let pcIndexMove = Math.floor(Math.random() * player.moves.length);
+      let pcMove = pc.moves[pcIndexMove];
+      let pclog = `de Pc ha utilizado ${pcMove}`;
+      setAttacker(pc);
+      setLog(pclog);
+      setPlayer({ ...player, vida: Math.floor(player.vida - computerDamage) });
+    }, 1000);
+  }
   return isPlaying ? (
     <div
       className={"w-screen h-screen flex bg-gray-600 border"}
@@ -36,10 +59,18 @@ function App() {
       <div className="w-1/3">
         <Card pokemon={pc} />
       </div>
+      <button
+        onClick={() => damageDealt()}
+        className="w-2/4 text-white "
+      >
+        Attack
+      </button>
     </div>
   ) : (
     <div
-      className={"w-screen h-screen flex items-center justify-center bg-gray-600"}
+      className={
+        "w-screen h-screen flex items-center justify-center bg-gray-600"
+      }
       style={{
         background: `url(${bgInicio})`,
         backgroundRepeat: "no-repeat",
@@ -47,7 +78,12 @@ function App() {
         backgroundPosition: "center",
       }}
     >
-      <button className="border border-white rounded-xl px-4 py-2 text-lg font-medium bg-red-500 text-wrap text-white" onClick={() => setPlaying(true)}>start</button>
+      <button
+        className="border border-white rounded-xl px-4 py-2 text-lg font-medium bg-red-500 text-wrap text-white"
+        onClick={() => setPlaying(true)}
+      >
+        start
+      </button>
     </div>
   );
 }
