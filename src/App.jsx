@@ -1,50 +1,78 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-import Card from "./components/card";
-import { startGame } from "./utils/function";
-import { useEffect } from "react";
+import Card from "./components/Card";
+import { startGame, ataque } from "./utils/function";
 import bgBatle from "./assets/pokemongym.png";
 import bgInicio from "./assets/galar.png";
-/*componente card(que contenga vida,nivel,nombre,tipo,img,color,moves,isplayer) jugador y pc
-directorio utils(funcionatacar,stargame,endgame,posegame,calculo de efectividad,calculo de daño
-elegir pokemon random,calculo de nivel random,calculo de vida dendiendo lvl) con pokemodata y funciones
 
- */
 function App() {
   const [player, setPlayer] = useState(undefined);
   const [pc, setPc] = useState(undefined);
   const [isPlaying, setPlaying] = useState(false);
+  const [log, setLog] = useState([]);
+  const [winner, setWinner] = useState(null);
+
   useEffect(() => {
     let jugadores = startGame();
     setPlayer(jugadores[0]);
     setPc(jugadores[1]);
   }, []);
 
-  function damageDealt() {
-    let playerDamage = attack(player, pc);
-    let indexMove = Math.floor(Math.random() * player.moves.length);
-    let move = player.moves[indexMove];
-    let log = `de Jugador ha utilizado ${move}`;
-    setAttacker(player);
-    setLog(log);
+  useEffect(() => {
+    if (player && player.vida <= 0) {
+      setWinner("PC");
+      setPlaying(false);
+      setLog((prev) => [...prev, "GAME OVER"]);
+    } else if (pc && pc.vida <= 0) {
+      setWinner("Jugador");
+      setPlaying(false);
+      setLog((prev) => [...prev, "GAME OVER"]);
+    }
+  }, [player, pc]);
 
-    setComputer({
-      ...pc,
-      vida: Math.floor(pc.vida - playerDamage),
-    });
+  // 👉 ESTE es el if que tenés que agregar acá
+  if (winner) {
+    return (
+      <div className="w-screen h-screen flex flex-col items-center justify-center bg-black text-white">
+        <h1 className="text-4xl font-bold mb-6">
+          ¡{winner} ganó la partida!
+        </h1>
+        <button
+          className="border border-white rounded-xl px-4 py-2 text-lg font-medium bg-red-500 text-white"
+          onClick={() => {
+            let jugadores = startGame();
+            setPlayer(jugadores[0]);
+            setPc(jugadores[1]);
+            setLog([]);
+            setWinner(null);
+            setPlaying(true);
+          }}
+        >
+          Volver a Jugar
+        </button>
+      </div>
+    );
+  }
+
+  function damageDealt() {
+    let playerDamage = ataque(player, pc);
+    let move = player.moves[Math.floor(Math.random() * player.moves.length)];
+    let logText = `Jugador usó ${move} y causó ${playerDamage} de daño.`;
+    setPc((prevPc) => ({ ...prevPc, vida: Math.max(prevPc.vida - playerDamage, 0) }));
+    setLog((prev) => [...prev, logText]);
+
     setTimeout(() => {
-      let computerDamage = attack(pc, player);
-      let pcIndexMove = Math.floor(Math.random() * player.moves.length);
-      let pcMove = pc.moves[pcIndexMove];
-      let pclog = `de Pc ha utilizado ${pcMove}`;
-      setAttacker(pc);
-      setLog(pclog);
-      setPlayer({ ...player, vida: Math.floor(player.vida - computerDamage) });
+      let pcDamage = ataque(pc, player);
+      let pcMove = pc.moves[Math.floor(Math.random() * pc.moves.length)];
+      let pcLogText = `PC usó ${pcMove} y causó ${pcDamage} de daño.`;
+      setPlayer((prevPlayer) => ({ ...prevPlayer, vida: Math.max(prevPlayer.vida - pcDamage, 0) }));
+      setLog((prev) => [...prev, pcLogText]);
     }, 1000);
   }
+
   return isPlaying ? (
     <div
-      className={"w-screen h-screen flex bg-gray-600 border"}
+      className="w-screen h-screen flex flex-col items-center justify-center"
       style={{
         background: `url(${bgBatle})`,
         backgroundRepeat: "no-repeat",
@@ -52,25 +80,27 @@ function App() {
         backgroundPosition: "center",
       }}
     >
-      <div className="w-1/3">
+      <div className="flex w-full p-4 gap-4">
         <Card pokemon={player} />
-      </div>
-      <div className="w-1/3">Log</div>
-      <div className="w-1/3">
+        <div className="flex flex-col bg-white p-2 rounded overflow-y-auto h-64 w-1/3">
+          <h2 className="font-bold">Registro</h2>
+          {log.map((item, index) => (
+            <p key={index}>{item}</p>
+          ))}
+        </div>
         <Card pokemon={pc} />
       </div>
+
       <button
         onClick={() => damageDealt()}
-        className="w-2/4 text-white "
+        className="border border-white rounded-xl px-4 py-2 text-lg font-medium bg-red-500 text-white mt-4"
       >
-        Attack
+        Atacar
       </button>
     </div>
   ) : (
     <div
-      className={
-        "w-screen h-screen flex items-center justify-center bg-gray-600"
-      }
+      className="w-screen h-screen flex items-center justify-center"
       style={{
         background: `url(${bgInicio})`,
         backgroundRepeat: "no-repeat",
@@ -79,10 +109,10 @@ function App() {
       }}
     >
       <button
-        className="border border-white rounded-xl px-4 py-2 text-lg font-medium bg-red-500 text-wrap text-white"
+        className="border border-white rounded-xl px-4 py-2 text-lg font-medium bg-red-500 text-white"
         onClick={() => setPlaying(true)}
       >
-        start
+        Comenzar partida
       </button>
     </div>
   );

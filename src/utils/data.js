@@ -9,31 +9,35 @@ export const pokemons = [
     nombre: "pikachu",
     type: "electrico",
     img: pikachuImg,
-    color: "",
+    color: "#FFD700",
+    moves: ["Impactrueno", "Chispa", "Rayo"]
   },
   {
     nombre: "squirtle",
     type: "agua",
     img: squirteImg,
-    color: "",
+    color: "#3B9AE1",
+    moves: ["Pistola Agua", "Burbuja", "HidroBomba"]
   },
   {
     nombre: "charmander",
     type: "fuego",
     img: charmanderImg,
-    color: "",
+    color: "#FF4500",
+    moves: ["Ascuas", "Lanzallamas", "Giro Fuego"]
   },
   {
     nombre: "onix",
     type: "roca",
     img: onixImg,
-    color: "",
+    color: "#A9A9A9",
+    moves: ["Placaje", "Roca Afilada", "Terremoto"]
   },
   {
     nombre: "teemo",
     type: "beemo",
     img: teemoImg,
-    
-
+    color: "#00FF7F",
+    moves: ["Dardo Venenoso", "Seta Mortal", "Sprint"]
   }
 ];
