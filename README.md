@@ -1,8 +1,29 @@
-# React + Vite
+# Pokémon Game 🎮⚛️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+¡Bienvenidos a mi proyecto Pokémon hecho con React y Tailwind CSS!
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Descripción
+
+Esta es una aplicación web interactiva que permite simular una mini batalla Pokémon, ver sus detalles y características con un diseño moderno y responsivo. Construida con React para la interfaz y Tailwind CSS para los estilos rápidos y elegantes.
+
+El objetivo es practicar React y estilos modernos mientras desarrollo algo divertido para los fanáticos de Pokémon.
+
+---
+
+## 🛠️ Tecnologías usadas
+
+- **React** – Biblioteca para construir interfaces de usuario.
+- **Tailwind CSS** – Framework CSS utilitario para estilos rápidos.
+- **PokéAPI** – API pública para obtener datos oficiales de Pokémon.
+- **Vite** – Herramienta para bundling y desarrollo rápido.
+
+---
+
+## 📸 Capturas
+
+![Home](ruta/a/tu-imagen-home.png)  
+![Detalle Pokémon](ruta/a/tu-imagen-detalle.png)  
+
+
