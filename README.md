@@ -19,11 +19,6 @@ El objetivo es practicar React y estilos modernos mientras desarrollo algo diver
 - **PokéAPI** – API pública para obtener datos oficiales de Pokémon.
 - **Vite** – Herramienta para bundling y desarrollo rápido.
 
----
 
-## 📸 Capturas
-
-![Home](ruta/a/tu-imagen-home.png)  
-![Detalle Pokémon](ruta/a/tu-imagen-detalle.png)  
 
 
