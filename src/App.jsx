@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Card from "./components/Card";
 import { startGame, ataque } from "./utils/function";
-import bgBatle from "./assets/pokemongym.png";
-import bgInicio from "./assets/galar.png";
+import bgBatle from "./assets/fondo2.jpg";
+import bgInicio from "./assets/poke.png";
 
 function App() {
   const [player, setPlayer] = useState(undefined);
